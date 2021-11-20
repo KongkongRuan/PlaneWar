@@ -12,47 +12,47 @@ import java.util.ArrayList;
 import java.util.List;
 import cn.sxt.game.Plane.Direction;
 /**
- * ÓÎÏ·Ö÷´°¿ÚÀàÍ¬Ê±Ò²ÊÇÓÎÏ·µÄÖ÷ÌåÀà
- * °üº¬ÁËËùÓĞÏß³ÌµÄÆô¶¯ ¡¢ËùÓĞÓÎÏ·ÎïÌåµÄÖØ»æºÍ¼üÅÌ¼àÌı
- * @author ãÆĞñ½Ü
+ * æ¸¸æˆä¸»çª—å£ç±»åŒæ—¶ä¹Ÿæ˜¯æ¸¸æˆçš„ä¸»ä½“ç±»
+ * åŒ…å«äº†æ‰€æœ‰çº¿ç¨‹çš„å¯åŠ¨ ã€æ‰€æœ‰æ¸¸æˆç‰©ä½“çš„é‡ç»˜å’Œé”®ç›˜ç›‘å¬
+ * @author é—«æ—­æ°
  */
 public class MyGameFrame extends Frame {
 	File f ;
 	static final float WIDE=500;
 	static final float HIGH=500;
-	//´°¿ÚÆğÊ¼×ø±ê
+	//çª—å£èµ·å§‹åæ ‡
 	static final float WINDOW_X= 700;
 	static final float WINDOW_Y= 300;
 	private int grade=0;
 	private int BestGrade;
 	public boolean p_stop=false;
 	public boolean b_begin=false;
-	//¼ÓÔØÎÒ·½·É»úÍ¼Æ¬
+	//åŠ è½½æˆ‘æ–¹é£æœºå›¾ç‰‡
 	Image myplaneImg = GameUtil.getImage("images/myplane.png");
-	//¼ÓÔØµĞ·½·É»úÍ¼Æ¬
+	//åŠ è½½æ•Œæ–¹é£æœºå›¾ç‰‡
 	Image enemyplaneImg = GameUtil.getImage("images/enemyplane.png");
-	//¼ÓÔØ±³¾°Í¼Æ¬
+	//åŠ è½½èƒŒæ™¯å›¾ç‰‡
 	Image bg0 = GameUtil.getImage("imagesbg/bg0.png");
 	Image bg1 = GameUtil.getImage("imagesbg/bg1.png");
 	Image bg2 = GameUtil.getImage("imagesbg/bg2.png");
 	Image bg3 = GameUtil.getImage("imagesbg/bg3.png");
 	Image bg4 = GameUtil.getImage("imagesbg/bg4.png");
 	Image bg5 = GameUtil.getImage("imagesbg/bg2.png");
-	//ÔÚÖ¸¶¨×ø±ê´´½¨Ò»¸öÎÒ¾üÕ½»ú
+	//åœ¨æŒ‡å®šåæ ‡åˆ›å»ºä¸€ä¸ªæˆ‘å†›æˆ˜æœº
 	Plane myplane = new Plane(myplaneImg,(int)230,(int)450,Plane.Direction.U,this);
-	// TDD ÊµÏÖËæ»ú³öÏÖÌ¹¿ËÍ¼Æ¬(Î´ÊµÏÖ)
+	// TDD å®ç°éšæœºå‡ºç°å¦å…‹å›¾ç‰‡(æœªå®ç°)
 	List<DPlane> enemyPlanes=new ArrayList<DPlane>();
-	//´æ·Å×Óµ¯¶ÔÏóµÄÈİÆ÷
+	//å­˜æ”¾å­å¼¹å¯¹è±¡çš„å®¹å™¨
 	List<Shell> shells=new ArrayList<Shell>();
-	//´æ·Å±¬Õ¨¶ÔÏóµÄÈİÆ÷
+	//å­˜æ”¾çˆ†ç‚¸å¯¹è±¡çš„å®¹å™¨
 	List<Explode> explodes=new ArrayList<Explode>();
-	//´æ·Å¼ÓÑªµÀ¾ßµÄÈİÆ÷
+	//å­˜æ”¾åŠ è¡€é“å…·çš„å®¹å™¨
 	List<BloodProps> bloodProps=new ArrayList<BloodProps>();
-	//´æ·Å»¤¶ÜµÀ¾ßµÄÈİÆ÷
+	//å­˜æ”¾æŠ¤ç›¾é“å…·çš„å®¹å™¨
 	List<ShieldProps> shieldProps=new ArrayList<ShieldProps>();
-	//×Ô¶¯±»µ÷ÓÃ,gÏàµ±ÓÚÒ»¸ö»­±Ê
+	//è‡ªåŠ¨è¢«è°ƒç”¨,gç›¸å½“äºä¸€ä¸ªç”»ç¬”
 	public void paint(Graphics g) {
-		//»­³ö±³¾°
+		//ç”»å‡ºèƒŒæ™¯
 		g.drawImage(bg0,0,0,null);
 		if(getGrade()>500&&getGrade()<=1000)
 		g.drawImage(bg1,0,0,null);
@@ -65,35 +65,35 @@ public class MyGameFrame extends Frame {
 		if(getGrade()>2500)
 		g.drawImage(bg5,0,0,null);
 		/*
-		 * ÊµÏÖ°´B¼ü¿ªÊ¼ÓÎÏ·
-		 * b_begin±äÁ¿³õÊ¼ÖµÎªfalse
-		 * ´ò¿ªÓÎÏ·Ê×ÏÈÏÔÊ¾"°´B¼ü¿ªÊ¼ÓÎÏ·"
+		 * å®ç°æŒ‰Bé”®å¼€å§‹æ¸¸æˆ
+		 * b_beginå˜é‡åˆå§‹å€¼ä¸ºfalse
+		 * æ‰“å¼€æ¸¸æˆé¦–å…ˆæ˜¾ç¤º"æŒ‰Bé”®å¼€å§‹æ¸¸æˆ"
 		 */
 		if(!b_begin) {
 			Color c = g.getColor();
 			g.setColor(Color.RED);
-			g.setFont(new Font("ËÎÌå",Font.BOLD,40));
-			g.drawString("°´B¼ü¿ªÊ¼ÓÎÏ·", 100, 250);
+			g.setFont(new Font("å®‹ä½“",Font.BOLD,40));
+			g.drawString("æŒ‰Bé”®å¼€å§‹æ¸¸æˆ", 100, 250);
 			g.setColor(c);
 		}
 		else {
 			/*
-			 * ÊµÏÖ°´P¼üÔİÍ£ÓÎÏ·
-			 * b_begin±äÁ¿³õÊ¼ÖµÎªfalse
-			 * °´P¼üÔİÍ£ÔÙ´ÎÇÃ»÷P¼üÔò¿ªÊ¼
+			 * å®ç°æŒ‰Pé”®æš‚åœæ¸¸æˆ
+			 * b_beginå˜é‡åˆå§‹å€¼ä¸ºfalse
+			 * æŒ‰Pé”®æš‚åœå†æ¬¡æ•²å‡»Pé”®åˆ™å¼€å§‹
 			 */
 			if(p_stop) {
 				Color c = g.getColor();
 				g.setColor(Color.WHITE);
-				g.setFont(new Font("ËÎÌå",Font.BOLD,50));
-				g.drawString("°´P¼ü¼ÌĞøÓÎÏ·", 100, 250);
+				g.setFont(new Font("å®‹ä½“",Font.BOLD,50));
+				g.drawString("æŒ‰Pé”®ç»§ç»­æ¸¸æˆ", 100, 250);
 				g.setColor(c);
 			}
 			else {
-				/*×î¸ß·ÖÊıÌí¼Óµ½ÕâÀï¸ü¼ÓºÏÀí
-				 *Ö»ÒªËÀÍö¾Í±£´æ×î¸ß·ÖÊı
-				 *²¢ÇÒ°Ñ×î¸ß·ÖÊı´æ´¢µ½DÅÌ¸ùÄ¿Â¼BestGrade.txtÎÄ¼şÖĞ
-				 *·½±ãÏÂÒ»´Î¿ªÊ¼ÓÎÏ·Ê±¶ÁÈ¡
+				/*æœ€é«˜åˆ†æ•°æ·»åŠ åˆ°è¿™é‡Œæ›´åŠ åˆç†
+				 *åªè¦æ­»äº¡å°±ä¿å­˜æœ€é«˜åˆ†æ•°
+				 *å¹¶ä¸”æŠŠæœ€é«˜åˆ†æ•°å­˜å‚¨åˆ°Dç›˜æ ¹ç›®å½•BestGrade.txtæ–‡ä»¶ä¸­
+				 *æ–¹ä¾¿ä¸‹ä¸€æ¬¡å¼€å§‹æ¸¸æˆæ—¶è¯»å–
 				 */
 				if(!myplane.isLive()) {
 					if(getBestGrade()<getGrade()) {
@@ -108,20 +108,20 @@ public class MyGameFrame extends Frame {
 							e1.printStackTrace();
 						}
 				}
-					/*ÅĞ¶Ï Èç¹ûÆÁÄ»ÖĞµÄµĞ·½Õ½»úĞ¡ÓÚ6¼Ü
-					 * Í¨¹ıÑ­»·´´½¨Îå¼ÜµØ·½Õ½»ú²¢Ìí¼Óµ½µĞ·½Õ½»úÈİÆ÷ÖĞ
+					/*åˆ¤æ–­ å¦‚æœå±å¹•ä¸­çš„æ•Œæ–¹æˆ˜æœºå°äº6æ¶
+					 * é€šè¿‡å¾ªç¯åˆ›å»ºäº”æ¶åœ°æ–¹æˆ˜æœºå¹¶æ·»åŠ åˆ°æ•Œæ–¹æˆ˜æœºå®¹å™¨ä¸­
 					 */
 					if(enemyPlanes.size()<6) {
 						for(int i=0;i<5;i++) {
 							enemyPlanes.add(new DPlane(enemyplaneImg, 50+400*Math.random(), 0, Direction.D,this));
 						}
 					}
-					myplane.drawSelf(g);//»­³öÎÒ·½Õ½»ú
+					myplane.drawSelf(g);//ç”»å‡ºæˆ‘æ–¹æˆ˜æœº
 					/*
-					 * ´ÓÈİÆ÷ÖĞÈ¡³öËùÓĞÅÚµ¯²¢»­³öÀ´
-					 * È¡³öºóµ÷ÓÃhitPlanes·½·¨ºÍËùÓĞµĞ·½Õ½»ú½øĞĞÅö×²¼ì²â
-					 * Èç¹ûÎÒ·½Õ½»ú»¤¶ÜÊôĞÔÎªfalseÔò½øĞĞÅö×²¼ì²â
-					 * ·ñÔò²»ÓëÎÒ·½Õ½»ú½øĞĞÅö×²¼ì²â(ÊµÏÖÁË»¤¶ÜÎŞµĞ¹¦ÄÜ)
+					 * ä»å®¹å™¨ä¸­å–å‡ºæ‰€æœ‰ç‚®å¼¹å¹¶ç”»å‡ºæ¥
+					 * å–å‡ºåè°ƒç”¨hitPlanesæ–¹æ³•å’Œæ‰€æœ‰æ•Œæ–¹æˆ˜æœºè¿›è¡Œç¢°æ’æ£€æµ‹
+					 * å¦‚æœæˆ‘æ–¹æˆ˜æœºæŠ¤ç›¾å±æ€§ä¸ºfalseåˆ™è¿›è¡Œç¢°æ’æ£€æµ‹
+					 * å¦åˆ™ä¸ä¸æˆ‘æ–¹æˆ˜æœºè¿›è¡Œç¢°æ’æ£€æµ‹(å®ç°äº†æŠ¤ç›¾æ— æ•ŒåŠŸèƒ½)
 					 */
 					for (int i = 0; i < shells.size(); i++) {
 						Shell m = shells.get(i);
@@ -132,17 +132,17 @@ public class MyGameFrame extends Frame {
 							m.drawSelf(g);
 					}
 					/*
-					 * ´ÓÈİÆ÷ÖĞÈ¡³öËùÓĞ±¬Õ¨²¢»­³ö
+					 * ä»å®¹å™¨ä¸­å–å‡ºæ‰€æœ‰çˆ†ç‚¸å¹¶ç”»å‡º
 					 */
 					for(int i=0;i<explodes.size();i++) {
 						Explode e= explodes.get(i);
 						e.draw(g);
 					}
 					/*
-					 * ´ÓÈİÆ÷ÖĞÈ¡³öËùÓĞµĞ·½Õ½»ú²¢»­³ö
-					 * Í¬×Óµ¯
-					 * Èç¹ûÎÒ·½Õ½»ú»¤¶ÜÊôĞÔÎªfalseÔò½øĞĞÅö×²¼ì²â
-					 * ·ñÔò²»ÓëÎÒ·½Õ½»ú½øĞĞÅö×²¼ì²â(ÊµÏÖÁË»¤¶ÜÎŞµĞ¹¦ÄÜ)
+					 * ä»å®¹å™¨ä¸­å–å‡ºæ‰€æœ‰æ•Œæ–¹æˆ˜æœºå¹¶ç”»å‡º
+					 * åŒå­å¼¹
+					 * å¦‚æœæˆ‘æ–¹æˆ˜æœºæŠ¤ç›¾å±æ€§ä¸ºfalseåˆ™è¿›è¡Œç¢°æ’æ£€æµ‹
+					 * å¦åˆ™ä¸ä¸æˆ‘æ–¹æˆ˜æœºè¿›è¡Œç¢°æ’æ£€æµ‹(å®ç°äº†æŠ¤ç›¾æ— æ•ŒåŠŸèƒ½)
 					 */
 					for(int i=0;i<enemyPlanes.size();i++) {
 						DPlane p= enemyPlanes.get(i);
@@ -152,8 +152,8 @@ public class MyGameFrame extends Frame {
 						}
 					}
 					/*
-					 * ´ÓÈİÆ÷ÖĞÈ¡³öËùÓĞ¼ÓÑªµÀ¾ß
-					 * ²¢ÓëÎÒ·½Õ½»ú½øĞĞÅö×²¼ì²â
+					 * ä»å®¹å™¨ä¸­å–å‡ºæ‰€æœ‰åŠ è¡€é“å…·
+					 * å¹¶ä¸æˆ‘æ–¹æˆ˜æœºè¿›è¡Œç¢°æ’æ£€æµ‹
 					 */
 					for(int i=0;i<bloodProps.size();i++) {
 						BloodProps b= bloodProps.get(i);
@@ -161,8 +161,8 @@ public class MyGameFrame extends Frame {
 						myplane.collidesWithBlode(b);
 					}
 					/*
-					 * ´ÓÈİÆ÷ÖĞÈ¡³öËùÓĞ»¤¶ÜµÀ¾ß
-					 * ²¢ÓëÎÒ·½Õ½»ú½øĞĞÅö×²¼ì²â
+					 * ä»å®¹å™¨ä¸­å–å‡ºæ‰€æœ‰æŠ¤ç›¾é“å…·
+					 * å¹¶ä¸æˆ‘æ–¹æˆ˜æœºè¿›è¡Œç¢°æ’æ£€æµ‹
 					 */
 					for(int i=0;i<shieldProps.size();i++) {
 						ShieldProps s= shieldProps.get(i);
@@ -170,12 +170,12 @@ public class MyGameFrame extends Frame {
 						myplane.collidesWithShieldProps(s);
 					}
 					/*
-					 * 1.×Óµ¯ÈİÆ÷ÖĞ×Óµ¯ÊıÁ¿
-					 * 2.±¬Õ¨ÈİÆ÷ÖĞ±¬Õ¨¶ÔÏóÊıÁ¿
-					 * 3.µĞ·½Õ½»úÈİÆ÷ÖĞµĞ·½Õ½»úÊıÁ¿
-					 * 4.°´¼ü¹¦ÄÜËµÃ÷
-					 * 5.µ±Ç°·ÖÊı
-					 * 6.×î¸ß·ÖÊı
+					 * 1.å­å¼¹å®¹å™¨ä¸­å­å¼¹æ•°é‡
+					 * 2.çˆ†ç‚¸å®¹å™¨ä¸­çˆ†ç‚¸å¯¹è±¡æ•°é‡
+					 * 3.æ•Œæ–¹æˆ˜æœºå®¹å™¨ä¸­æ•Œæ–¹æˆ˜æœºæ•°é‡
+					 * 4.æŒ‰é”®åŠŸèƒ½è¯´æ˜
+					 * 5.å½“å‰åˆ†æ•°
+					 * 6.æœ€é«˜åˆ†æ•°
 					 */
 					Color c = g.getColor();
 					g.setColor(Color.WHITE);
@@ -183,7 +183,7 @@ public class MyGameFrame extends Frame {
 					g.drawString("Explodes count:"+explodes.size(), 20, 450);
 					g.drawString("EnemyPlanes count:"+enemyPlanes.size(), 20, 430);
 					g.drawString("MyPlane life:"+myplane.getHp(), 20, 410);
-					g.drawString("X·¢Éä×Óµ¯  PÔİÍ£ F2¸´»î", 20, 390);
+					g.drawString("Xå‘å°„å­å¼¹  Pæš‚åœ F2å¤æ´»", 20, 390);
 					g.drawString("Grade:"+this.getGrade(), 400, 50);
 					g.drawString("BestGrade:"+this.getBestGrade(), 400, 70);
 					g.setColor(c);
@@ -191,16 +191,16 @@ public class MyGameFrame extends Frame {
 		}
 	}
 	/*
-	 * Ö÷´°¿ÚÏß³Ì
-	 * ²ÉÓÃÁËÖ±½Ó¼Ì³ĞThreadÀàµÄĞÎÊ½
-	 * È»ºóÖØĞ´run·½·¨
-	 * Ã¿Ö´ĞĞÒ»´Îrepaint·½·¨Ïß³ÌĞİÃß40ºÁÃë
-	 * µÈ¼ÛÓÚ40ºÁÃëÖØ»­Ò»´Î Ë¢ĞÂÆµÂÊÎª40ºÁÃë
+	 * ä¸»çª—å£çº¿ç¨‹
+	 * é‡‡ç”¨äº†ç›´æ¥ç»§æ‰¿Threadç±»çš„å½¢å¼
+	 * ç„¶åé‡å†™runæ–¹æ³•
+	 * æ¯æ‰§è¡Œä¸€æ¬¡repaintæ–¹æ³•çº¿ç¨‹ä¼‘çœ 40æ¯«ç§’
+	 * ç­‰ä»·äº40æ¯«ç§’é‡ç”»ä¸€æ¬¡ åˆ·æ–°é¢‘ç‡ä¸º40æ¯«ç§’
 	 */
 	class PaintThread extends Thread{
 			public void run() {
 				while(true) {
-					//ÔËĞĞÖØ»­·½·¨
+					//è¿è¡Œé‡ç”»æ–¹æ³•
 					repaint();
 					try {
 						Thread.sleep(40);
@@ -211,8 +211,8 @@ public class MyGameFrame extends Frame {
 		}
 	}
 	/*
-	 * Ìí¼Ó¼üÅÌ¼àÌı
-	 * ÖØĞ´keyPressedºÍkeyReleased·½·¨
+	 * æ·»åŠ é”®ç›˜ç›‘å¬
+	 * é‡å†™keyPressedå’ŒkeyReleasedæ–¹æ³•
 	 */
 	
 	class KeyMonitor extends KeyAdapter{
@@ -226,16 +226,16 @@ public class MyGameFrame extends Frame {
 	}
 	
 	/**
-	 * ÉèÖÃÓÎÏ·´°¿ÚÊôĞÔ
+	 * è®¾ç½®æ¸¸æˆçª—å£å±æ€§
 	 */
 	public void launchFrame() {
 		/*
-		 * ´ÓDÅÌ¸ùÄ¿Â¼BestGrade.txtÎÄ¼şÖĞ¶ÁÈ¡×î¸ß·ÖÊı
-		 * Èç¹ûÎÄ¼ş²»´æÔÚÔòĞÂ½¨ÎÄ¼ş
+		 * ä»Dç›˜æ ¹ç›®å½•BestGrade.txtæ–‡ä»¶ä¸­è¯»å–æœ€é«˜åˆ†æ•°
+		 * å¦‚æœæ–‡ä»¶ä¸å­˜åœ¨åˆ™æ–°å»ºæ–‡ä»¶
 		 */
-		//¶¨Î»ÎÄ¼ş
+		//å®šä½æ–‡ä»¶
 		f = new File("D:\\","BestGrade.txt");
-		//Èç¹ûÎÄ¼ş²»´æÔÚ
+		//å¦‚æœæ–‡ä»¶ä¸å­˜åœ¨
 		if(!f.exists()){
 			try {
 				f.createNewFile();
@@ -246,7 +246,12 @@ public class MyGameFrame extends Frame {
 			}else {
 				try {
 					BufferedReader bfr = new BufferedReader(new FileReader(f));
-					setBestGrade(Integer.parseInt(bfr.readLine()));
+					String s = bfr.readLine();
+					if(s!=null&&s!=""){
+						setBestGrade(Integer.parseInt(s));
+					}else {
+						setBestGrade(0);
+					}
 					bfr.close();
 				} catch (FileNotFoundException e1) {
 					e1.printStackTrace();
@@ -254,27 +259,27 @@ public class MyGameFrame extends Frame {
 					e1.printStackTrace();
 				}
 			}
-		//³õÊ¼»¯µĞ·½·É»ú
+		//åˆå§‹åŒ–æ•Œæ–¹é£æœº
 		for(int i=0;i<10;i++) {
 			enemyPlanes.add(new DPlane(enemyplaneImg, 50+400*Math.random(), 0, Direction.D,this));
 		}
 		
-		//´°¿Ú±êÌâ
-		this.setTitle("·É»ú´óÕ½");
-		//ÉèÖÃ´°¿Ú´óĞ¡
+		//çª—å£æ ‡é¢˜
+		this.setTitle("é£æœºå¤§æˆ˜");
+		//è®¾ç½®çª—å£å¤§å°
 		this.setSize((int)HIGH,(int)WIDE );
-		//´°¿ÚÎ»ÖÃ(´°¿Ú×óÉÏ½Ç×ø±ê)
+		//çª—å£ä½ç½®(çª—å£å·¦ä¸Šè§’åæ ‡)
 		this.setLocation((int)WINDOW_X,(int)WINDOW_Y);
-		//Æô¶¯ÖØ»­Ïß³Ì
+		//å¯åŠ¨é‡ç”»çº¿ç¨‹
 		new PaintThread().start();
-		//Ôö¼Ó¼üÅÌ¼àÌı
+		//å¢åŠ é”®ç›˜ç›‘å¬
 		this.addKeyListener(new KeyMonitor());
-		//Ê¹ÓÃ»§²»ÄÜ¸ü¸Ä´°¿Ú´óĞ¡
+		//ä½¿ç”¨æˆ·ä¸èƒ½æ›´æ”¹çª—å£å¤§å°
 		this.setResizable(false);
-		//´°¿Ú¿É¼û
+		//çª—å£å¯è§
 		this.setVisible(true);
 		/*
-		 * Ê¹ÓÃÄäÃûÄÚ²¿ÀàÌí¼ÓÓÒÉÏ½Çºì²æ¹Ø±ÕÓÎÏ·µÄ¹¦ÄÜ
+		 * ä½¿ç”¨åŒ¿åå†…éƒ¨ç±»æ·»åŠ å³ä¸Šè§’çº¢å‰å…³é—­æ¸¸æˆçš„åŠŸèƒ½
 		 */
 		this.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
@@ -283,14 +288,14 @@ public class MyGameFrame extends Frame {
 		});
 	}
 	/*
-	 * Ö÷·½·¨
+	 * ä¸»æ–¹æ³•
 	 */
 	public static void main(String[]args) {
 		MyGameFrame mf = new MyGameFrame();
 		mf.launchFrame();
 	}
 	/**
-	 * Ë«»º³åÇø½â¾öÆÁÄ»ÉÁË¸ÎÊÌâ
+	 * åŒç¼“å†²åŒºè§£å†³å±å¹•é—ªçƒé—®é¢˜
 	 */
 	private Image offScreenImage = null;
     public void update(Graphics g) {
@@ -302,14 +307,14 @@ public class MyGameFrame extends Frame {
         paint(gOff);
         g.drawImage(offScreenImage, 0, 0, null);
     }
-    //·ÖÊıµÄget set·½·¨
+    //åˆ†æ•°çš„get setæ–¹æ³•
 	public int getGrade() {
 		return grade;
 	}
 	public void setGrade(int grade) {
 		this.grade = grade;
 	}
-	//×î¸ß·ÖµÄget set·½·¨
+	//æœ€é«˜åˆ†çš„get setæ–¹æ³•
 	public int getBestGrade() {
 		return BestGrade;
 	}
